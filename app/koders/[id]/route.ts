@@ -13,11 +13,25 @@ export async function GET(
 
     if (!koder) throw createError(404, `Koder ${params.id} not found`);
 
-    return NextResponse.json({ koder });
+    return NextResponse.json(
+      { koder },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message || "unknown" },
-      { status: error?.status || 500 }
+      {
+        status: error?.status || 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
     );
   }
 }
@@ -31,13 +45,27 @@ export async function DELETE(
       where: { id: params.id },
     });
 
-    return NextResponse.json({
-      koderDeleted,
-    });
+    return NextResponse.json(
+      {
+        koderDeleted,
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message || "unknown" },
-      { status: error?.status || 500 }
+      {
+        status: error?.status || 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
     );
   }
 }

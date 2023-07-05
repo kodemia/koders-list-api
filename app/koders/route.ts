@@ -5,11 +5,18 @@ import createError from "http-errors";
 const prisma = new PrismaClient();
 
 export async function GET() {
-  console.log("GET");
   const koders = await prisma.koder.findMany({});
-  return NextResponse.json({
-    koders,
-  });
+  return NextResponse.json(
+    {
+      koders,
+    },
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      },
+    }
+  );
 }
 
 export async function POST(request: Request) {
@@ -28,13 +35,27 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
-      koderCreated,
-    });
+    return NextResponse.json(
+      {
+        koderCreated,
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message || "unknown" },
-      { status: error?.status || 500 }
+      {
+        status: error?.status || 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        },
+      }
     );
   }
 }
